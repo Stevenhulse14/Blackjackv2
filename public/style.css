@@ -19,3 +19,58 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.BigContainer{
+  border: 2px solid black;
+  width: 800px;
+  height: 600px;
+  margin: auto
+}
+.tablecontainer{
+  border: 2px solid red;
+  background-color: rgba(0, 100, 0,.7);
+  width: 97%;
+  height: 90%;
+  margin: auto;
+}
+.ButtonContainer{
+  border: 2px solid green;
+  width: 97%;
+  height: 8.5%;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+.dealer{
+  display: flex;
+  justify-content: center;
+  height: 40%;
+  width: 50%;
+  max-width: 100%;
+  margin:auto
+}
+.Playerhand{
+  display: flex;
+  justify-content: center;
+  height: 50%;
+  width: 50%;
+  max-width: 100%;
+  margin:auto
+}
+#cards{
+  border-radius: 10px 10px 10px 10px;
+  margin-right: 2px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  border: 2px solid black;
+  width:100px;
+  height:140px;
+}
+.Score{
+  border:2px solid black;
+  border-radius: 10px 10px 10px 10px;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  margin-top: 20px;
+}
