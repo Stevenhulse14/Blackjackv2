@@ -29,8 +29,6 @@ const BlackjackTable = () => {
     sethands((playershands) => [...playershands, game.playerhand].flat());
     sethouse((house) => [...house, game.house].flat());
     setdeck((deck) => [...deck, game.deck].flat());
-
-
     bjstart(Calculatehand(game.house), Calculatehand(game.playerhand));
   }
 
@@ -83,7 +81,8 @@ const BlackjackTable = () => {
   function reset() {
     sethouse((house) => []);
     sethands((playershands) => []);
-    if (deck.length <= 14) {
+    if (deck.length <= 14 && deck !== []) {
+      setdeck(deck=> [])
       Start();
     } else {
       const temphouse = [];
