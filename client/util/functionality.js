@@ -43,7 +43,7 @@ export default function startgame(){
             game.playerhand.push(game.deck.pop())
             game.house.push(game.deck.pop())
     }
-        //game.currenthand = game.calchand(game.house)
+        game.currenthand = game.calchand(game.house)
         return game
 }
 const func =(hand)=> hand <= 21
