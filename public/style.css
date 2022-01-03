@@ -41,6 +41,19 @@ form div {
   display: flex;
   justify-content: space-evenly;
 }
+.ButtonContainer Button{
+  border-radius: 10px 10px 10px 10px;
+  width: 80px;
+  box-shadow: 0 1px 2px rgba(209, 142, 142, 0.822);
+  transition: box-shadow 0.3s ease-in-out;
+
+}
+.ButtonContainer Button:hover{
+  box-shadow: 0 5px 15px rgba(77, 180, 77, 0.658);
+}
+.ButtonContainer Button:hover::after {
+  opacity: 1;
+}
 .dealer{
   display: flex;
   justify-content: center;
@@ -59,7 +72,7 @@ form div {
 }
 #cards{
   border-radius: 10px 10px 10px 10px;
-  margin-right: 2px;
+  margin-right: -60px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   border: 2px solid black;
   width:100px;

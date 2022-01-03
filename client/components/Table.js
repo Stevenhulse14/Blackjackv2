@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import startgame, { Blackjack } from "../util/functionality";
+import startgame from "../util/functionality";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const BlackjackTable = () => {
   const [deck, setdeck] = useState([]);
   const [change, setchange] = useState(true);
+  const [split, setsplit] = useState([])
   const [playershands, sethands] = useState([]);
   const [house, sethouse] = useState([]);
   const [option, setoption] = useState({
@@ -62,6 +63,10 @@ const BlackjackTable = () => {
     }, 1000);
   }
 
+  function Split(){
+    //setsplit((split) => )
+  }
+  
   function bjstart(dealer, myhand) {
     console.log(dealer, myhand);
     if (dealer === 21 && dealer === myhand) {
@@ -146,7 +151,7 @@ const BlackjackTable = () => {
       </div>
 
       {Calculatehand(house) === 21 ||
-      Calculatehand(playershands) === 21 ? <div className="ButtonContainer"/>: (
+      Calculatehand(playershands) >= 21 ? <div className="ButtonContainer"/>: (
         <div className="ButtonContainer">
           <button onClick={() => Stand()}>STAND</button>
           <button onClick={() => Hit()}>HIT</button>
@@ -179,5 +184,4 @@ const BlackjackTable = () => {
 };
 
 export default connect()(BlackjackTable);
-// {Calculatehand(house) === 21 ? alert("dealerwon"): null}
-// {Calculatehand(playershands)===21? alert("youwon"):null}
+
