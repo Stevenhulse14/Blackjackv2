@@ -62,14 +62,7 @@ form div {
   max-width: 100%;
   margin:auto
 }
-.Playerhands{
-  display: flex;
-  justify-content: center;
-  height: 50%;
-  width: 50%;
-  max-width: 100%;
-  margin:auto
-}
+
 .targethand{
   display: flex;
   justify-content: center;

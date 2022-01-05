@@ -110,8 +110,9 @@ const BlackjackTable = () => {
   }
 
   function Hit() {
-    playershands.push(deck.pop());
-    sethands((playershands) => [...playershands].flat());
+    //automate the hands go from one to the next
+    playershands[0].push(deck.pop());
+    sethands((playershands) => [...playershands]);
     console.log(Calculatehand(playershands));
     setTimeout(() => {
       if (Calculatehand(playershands) > 21) {
