@@ -62,13 +62,22 @@ form div {
   max-width: 100%;
   margin:auto
 }
-.Playerhand{
+.Playerhands{
   display: flex;
   justify-content: center;
   height: 50%;
   width: 50%;
   max-width: 100%;
   margin:auto
+}
+.targethand{
+  display: flex;
+  justify-content: center;
+  height: 50%;
+  width: 50%;
+  max-width: 100%;
+  margin:auto
+
 }
 #cards{
   border-radius: 10px 10px 10px 10px;

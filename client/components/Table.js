@@ -27,7 +27,7 @@ const BlackjackTable = () => {
 
   function Start() {
     const game = startgame();
-    sethands((playershands) => [...playershands, game.playerhand].flat());
+    sethands((playershands) => [...playershands, game.playerhand]);
     sethouse((house) => [...house, game.house].flat());
     setdeck((deck) => [...deck, game.deck].flat());
     bjstart(Calculatehand(game.house), Calculatehand(game.playerhand));
@@ -64,9 +64,11 @@ const BlackjackTable = () => {
   }
 
   function Split(){
-    //setsplit((split) => )
+    setsplit((split) => [...split, playershands.pop()])
+    //Hit()
+    console.log(split)
   }
-  
+
   function bjstart(dealer, myhand) {
     console.log(dealer, myhand);
     if (dealer === 21 && dealer === myhand) {
@@ -129,6 +131,7 @@ const BlackjackTable = () => {
     toast(`${x} Bust handtotal:${hand}`);
   }
   //../../public/cards
+  console.log(playershands)
   return (
     <div className="BigContainer">
       <ToastContainer />
@@ -141,11 +144,17 @@ const BlackjackTable = () => {
           ))}
         </div>
         <div className="Deck"></div>
-        <div className="Playerhand">
-          {playershands.map((cards) => (
-            <div key={Object.keys(cards).pop()}>
-              <img id="cards" src={`/cards/${Object.keys(cards).pop()}.png`} />
-            </div>
+        <div className="Playerhands">
+          {playershands.map((hands) => 
+          ( 
+          <div className="targethand">
+            {
+              hands.map(cards => (
+              <div key={Object.keys(cards).pop()}>
+                <img id="cards" src={`/cards/${Object.keys(cards).pop()}.png`} />
+              </div> ))
+            }
+          </div>
           ))}
         </div>
       </div>
@@ -155,7 +164,7 @@ const BlackjackTable = () => {
         <div className="ButtonContainer">
           <button onClick={() => Stand()}>STAND</button>
           <button onClick={() => Hit()}>HIT</button>
-          <button>SPLIT</button>
+          <button onClick={() => Split()}>SPLIT</button>
           <button>DOUBLE</button>
         </div>
       )}
