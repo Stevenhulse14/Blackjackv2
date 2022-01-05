@@ -155,7 +155,8 @@ const BlackjackTable = () => {
                 <img id="cards" src={`/cards/${Object.keys(cards).pop()}.png`} />
               </div> ))
             }
-          </div>
+          <div className="handtot">{Calculatehand(hands)}</div>   
+          </div>  
           ))}
         </div>
       </div>
