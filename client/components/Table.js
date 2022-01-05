@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 const BlackjackTable = () => {
   const [deck, setdeck] = useState([]);
   const [change, setchange] = useState(true);
-  const [split, setsplit] = useState([])
+  const [split, setsplit] = useState([]);
   const [playershands, sethands] = useState([]);
   const [house, sethouse] = useState([]);
   const [option, setoption] = useState({
@@ -51,22 +51,22 @@ const BlackjackTable = () => {
         let ans = compare();
         if (ans) {
           toast(`you lose ${Calculatehand(house)} `);
-          setTimeout(()=>reset(),500)
+          setTimeout(() => reset(), 500);
         } else if (!ans) {
           toast(`you Won ${Calculatehand(house)} `);
-          setTimeout(()=>reset(),500)
+          setTimeout(() => reset(), 500);
         } else {
           toast("push");
-          setTimeout(()=>reset(),500)
+          setTimeout(() => reset(), 500);
         }
       }
     }, 1000);
   }
 
-  function Split(){
-    setsplit((split) => [...split, playershands.pop()])
+  function Split() {
+    setsplit((split) => [...split, playershands.pop()]);
     //Hit()
-    console.log(split)
+    console.log(split);
   }
 
   function bjstart(dealer, myhand) {
@@ -76,11 +76,11 @@ const BlackjackTable = () => {
     } else {
       if (dealer === 21) {
         toast(`House Blackjack you:${myhand}, dealer:${dealer}`);
-        setTimeout(()=>reset(),500)
+        setTimeout(() => reset(), 500);
       }
       if (myhand === 21) {
         toast(`House Blackjack you:${myhand}, dealer:${dealer}`);
-        setTimeout(()=>reset(),500)
+        setTimeout(() => reset(), 500);
       }
     }
   }
@@ -89,7 +89,7 @@ const BlackjackTable = () => {
     sethouse((house) => []);
     sethands((playershands) => []);
     if (deck.length <= 14 && deck !== []) {
-      setdeck(deck=> [])
+      setdeck((deck) => []);
       Start();
     } else {
       const temphouse = [];
@@ -113,11 +113,26 @@ const BlackjackTable = () => {
     //automate the hands go from one to the next
     playershands[0].push(deck.pop());
     sethands((playershands) => [...playershands]);
-    console.log(Calculatehand(playershands));
+    if (
+      playershands[0].find(
+        (card) =>
+          card["Ace♥"] || card["Ace♦"] || card["Ace♠"] || card["Ace♣"]
+      ) && Calculatehand(playershands[0]) > 21
+    ) {
+      for( let i=0 ; i <= playershands[0].length-1 ; i++ ){
+        if(Object.keys(playershands[0][i])[0].substr(0,3)==="Ace"){
+          let name = Object.keys(playershands[0][i])[0]
+          playershands[0][0][name] = 1
+          break
+        }
+      }
+      sethands((playershands) => [...playershands])
+    }
+    console.log(Calculatehand(playershands[0]));
     setTimeout(() => {
       if (Calculatehand(playershands) > 21) {
         bust("you", Calculatehand(playershands));
-        setTimeout(()=>reset(),500)
+        setTimeout(() => reset(), 500);
       }
     }, 1000);
   }
@@ -132,7 +147,7 @@ const BlackjackTable = () => {
     toast(`${x} Bust handtotal:${hand}`);
   }
   //../../public/cards
-  console.log(playershands)
+  console.log(playershands);
   return (
     <div className="BigContainer">
       <ToastContainer />
@@ -146,23 +161,25 @@ const BlackjackTable = () => {
         </div>
         <div className="Deck"></div>
         <div className="Playerhands">
-          {playershands.map((hands) => 
-          ( 
-          <div className="targethand">
-            {
-              hands.map(cards => (
-              <div key={Object.keys(cards).pop()}>
-                <img id="cards" src={`/cards/${Object.keys(cards).pop()}.png`} />
-              </div> ))
-            }
-          <div className="handtot">{Calculatehand(hands)}</div>   
-          </div>  
+          {playershands.map((hands) => (
+            <div className="targethand">
+              {hands.map((cards) => (
+                <div key={Object.keys(cards).pop()}>
+                  <img
+                    id="cards"
+                    src={`/cards/${Object.keys(cards).pop()}.png`}
+                  />
+                </div>
+              ))}
+              <div className="handtot">{Calculatehand(hands)}</div>
+            </div>
           ))}
         </div>
       </div>
 
-      {Calculatehand(house) === 21 ||
-      Calculatehand(playershands) >= 21 ? <div className="ButtonContainer"/>: (
+      {Calculatehand(house) === 21 || Calculatehand(playershands) >= 21 ? (
+        <div className="ButtonContainer" />
+      ) : (
         <div className="ButtonContainer">
           <button onClick={() => Stand()}>STAND</button>
           <button onClick={() => Hit()}>HIT</button>
@@ -195,4 +212,3 @@ const BlackjackTable = () => {
 };
 
 export default connect()(BlackjackTable);
-
