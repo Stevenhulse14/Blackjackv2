@@ -98,7 +98,7 @@ const BlackjackTable = () => {
         temphouse.push(deck.pop());
         temphand.push(deck.pop());
       }
-      sethands((playershands) => [...playershands, temphand].flat());
+      sethands((playershands) => [...playershands, temphand]);
       sethouse((house) => [...house, temphouse].flat());
 
       bjstart(Calculatehand(temphouse), Calculatehand(temphand));
@@ -120,7 +120,8 @@ const BlackjackTable = () => {
       ) && Calculatehand(playershands[0]) > 21
     ) {
       for( let i=0 ; i <= playershands[0].length-1 ; i++ ){
-        if(Object.keys(playershands[0][i])[0].substr(0,3)==="Ace"){
+        //and value = 11
+        if(Object.keys(playershands[0][i])[0].substr(0,3)==="Ace" && Object.values(playershands[0][i])[0]===11){
           let name = Object.keys(playershands[0][i])[0]
           playershands[0][0][name] = 1
           break
@@ -130,8 +131,8 @@ const BlackjackTable = () => {
     }
     console.log(Calculatehand(playershands[0]));
     setTimeout(() => {
-      if (Calculatehand(playershands) > 21) {
-        bust("you", Calculatehand(playershands));
+      if (Calculatehand(playershands[0]) > 21) {
+        bust("you", Calculatehand(playershands[0]));
         setTimeout(() => reset(), 500);
       }
     }, 1000);
@@ -162,7 +163,7 @@ const BlackjackTable = () => {
         <div className="Deck"></div>
         <div className="Playerhands">
           {playershands.map((hands) => (
-            <div className="targethand">
+            <div key={1} className="targethand">
               {hands.map((cards) => (
                 <div key={Object.keys(cards).pop()}>
                   <img
