@@ -33,42 +33,7 @@ const BlackjackTable = () => {
     bjstart(Calculatehand(game.house), Calculatehand(game.playerhand));
   }
 
-  function Stand() {
-    while (Calculatehand(house) < 17) {
-      house.push(deck.pop());
-
-      sethouse((house) => [...house].flat());
-      if (Calculatehand(house) >= 17) {
-        break;
-      }
-    }
-    sethouse((house) => [...house].flat());
-    setTimeout(() => {
-      if (Calculatehand(house) > 21) {
-        bust("house");
-        reset();
-      } else {
-        let ans = compare();
-        if (ans) {
-          toast(`you lose ${Calculatehand(house)} `);
-          setTimeout(() => reset(), 500);
-        } else if (!ans) {
-          toast(`you Won ${Calculatehand(house)} `);
-          setTimeout(() => reset(), 500);
-        } else {
-          toast("push");
-          setTimeout(() => reset(), 500);
-        }
-      }
-    }, 1000);
-  }
-
-  function Split() {
-    setsplit((split) => [...split, playershands.pop()]);
-    //Hit()
-    console.log(split);
-  }
-
+  
   function bjstart(dealer, myhand) {
     console.log(dealer, myhand);
     if (dealer === 21 && dealer === myhand) {
@@ -108,11 +73,12 @@ const BlackjackTable = () => {
   function compare() {
     return Calculatehand(house) > Calculatehand(playershands);
   }
-
+  
   function Hit() {
     //automate the hands go from one to the next
     playershands[0].push(deck.pop());
     sethands((playershands) => [...playershands]);
+    //ace function will become its own function
     if (
       playershands[0].find(
         (card) =>
@@ -123,7 +89,7 @@ const BlackjackTable = () => {
         //and value = 11
         if(Object.keys(playershands[0][i])[0].substr(0,3)==="Ace" && Object.values(playershands[0][i])[0]===11){
           let name = Object.keys(playershands[0][i])[0]
-          playershands[0][0][name] = 1
+          playershands[0][i][name] = 1
           break
         }
       }
@@ -138,6 +104,45 @@ const BlackjackTable = () => {
     }, 1000);
   }
 
+  function Stand() {
+    while (Calculatehand(house) < 17) {
+      house.push(deck.pop());
+
+      sethouse((house) => [...house].flat());
+      if (Calculatehand(house) >= 17) {
+        break;
+      }
+    }
+    sethouse((house) => [...house].flat());
+    setTimeout(() => {
+      if (Calculatehand(house) > 21) {
+        bust("house");
+        reset();
+      } else {
+        let ans = compare();
+        if (ans) {
+          toast(`you lose ${Calculatehand(house)} `);
+          setTimeout(() => reset(), 500);
+        } else if (!ans) {
+          toast(`you Won ${Calculatehand(house)} `);
+          setTimeout(() => reset(), 500);
+        } else {
+          toast("push");
+          setTimeout(() => reset(), 500);
+        }
+      }
+    }, 1000);
+  }
+
+  function Split() {
+    setsplit((split) => [...split, playershands.pop()]);
+    //Hit()
+    console.log(split);
+  }
+  function DoubleDown(){
+    Hit()
+    Stand()
+  }
   function Calculatehand(hand) {
     return hand
       .map((num) => Object.values(num)[0])
@@ -151,9 +156,13 @@ const BlackjackTable = () => {
   console.log(playershands);
   return (
     <div className="BigContainer">
+
       <ToastContainer />
+
       <div className="tablecontainer">
+
         <div className="dealer">
+        <div className="handtot">{Calculatehand(house)}</div>
           {house.map((cards) => (
             <div key={Object.keys(cards).pop()}>
               <img id="cards" src={`/cards/${Object.keys(cards).pop()}.png`} />
@@ -185,7 +194,7 @@ const BlackjackTable = () => {
           <button onClick={() => Stand()}>STAND</button>
           <button onClick={() => Hit()}>HIT</button>
           <button onClick={() => Split()}>SPLIT</button>
-          <button>DOUBLE</button>
+          <button onClick={() => DoubleDown()}>DOUBLE</button>
         </div>
       )}
 
