@@ -17,7 +17,7 @@ const BlackjackTable = () => {
     comp: true,
     play: true,
   });
-
+  const tempdatabase = []
   useEffect(() => {
     Start();
     //setoption( option => option.newgame = true)
@@ -71,7 +71,12 @@ const BlackjackTable = () => {
   }
 
   function compare() {
-    return Calculatehand(house) > Calculatehand(playershands);
+    if(Calculatehand(house) === Calculatehand(playershands[0])){
+        return '='
+    }else{
+      return Calculatehand(house) > Calculatehand(playershands[0]);
+    }
+    
   }
   
   function Hit() {
@@ -108,7 +113,7 @@ const BlackjackTable = () => {
     while (Calculatehand(house) < 17) {
       house.push(deck.pop());
 
-      sethouse((house) => [...house].flat());
+      //sethouse((house) => [...house].flat());
       if (Calculatehand(house) >= 17) {
         break;
       }
@@ -116,24 +121,28 @@ const BlackjackTable = () => {
     sethouse((house) => [...house].flat());
     setTimeout(() => {
       if (Calculatehand(house) > 21) {
-        bust("house");
+        bust("house", Calculatehand(house));
         reset();
       } else {
         let ans = compare();
-        if (ans) {
-          toast(`you lose ${Calculatehand(house)} `);
+        if (ans === '=') {
+          toast(`push ${Calculatehand(playershands[0])} vs Dealer: ${Calculatehand(house)}`);
           setTimeout(() => reset(), 500);
-        } else if (!ans) {
-          toast(`you Won ${Calculatehand(house)} `);
+        } else if (!ans){
+          toast(`you Won ${Calculatehand(playershands[0])} vs Dealer: ${Calculatehand(house)} `);
           setTimeout(() => reset(), 500);
         } else {
-          toast("push");
+          toast(`you lose ${Calculatehand(playershands[0])} vs Dealer: ${Calculatehand(house)} `);
           setTimeout(() => reset(), 500);
+          
         }
       }
     }, 1000);
   }
-
+  function Hand_history(){
+    // line 119,125,131 and in the Hit function
+    
+  }
   function Split() {
     setsplit((split) => [...split, playershands.pop()]);
     //Hit()
